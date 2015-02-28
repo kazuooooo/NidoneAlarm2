@@ -1,0 +1,6 @@
+[submodule "androidUtils"]
+	path = androidUtils
+	url = https://github.com/yuriykulikov/AndroidUtils.git
+[submodule "alarmClock"]
+	path = alarmClock
+	url = https://github.com/yuriykulikov/AlarmClock.git

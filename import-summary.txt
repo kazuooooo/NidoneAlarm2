@@ -1,0 +1,116 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From AlarmClock:
+* .gitignore
+* MODULE_LICENSE_APACHE2
+* NOTICE
+* class_diagram.txt
+From AndroidUtils:
+* .gitignore
+* README.md
+From acra:
+* .gitignore
+* LICENSE
+* NOTICE
+* README.md
+* doc\
+* doc\CrashReports-Template.csv
+* doc\captures\
+* doc\captures\formkey.psd
+* doc\captures\notif.png
+* doc\captures\notif_dialog_full.png
+* doc\captures\notif_dialog_min.png
+* doc\captures\notif_ticker.png
+* doc\captures\notif_toast.png
+* doc\captures\update\
+* doc\captures\update\2partUpdate.png
+* doc\captures\update\2partUpdate2.png
+* doc\model\
+* doc\model\applicationLifeCycles.uml
+* pom.xml
+* src\
+* src\main\
+* src\main\assembly\
+* src\main\assembly\distribution.xml
+* src\main\build-config\
+* src\main\build-config\sun_checks-modified.xml
+* target\
+* target\test-classes\
+* target\test-classes\org\
+* target\test-classes\org\acra\
+* target\test-classes\org\acra\log\
+* target\test-classes\org\acra\log\NonAndroidLog.class
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:21.0.3
+robotium-solo-5.2.1.jar => com.jayway.android.robotium:robotium-solo:5.2.1
+guava-15.0.jar => com.google.guava:guava:15.0
+android-support-v4.jar => com.android.support:support-v4:21.0.3
+guava-15.0.jar => com.google.guava:guava:15.0
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+guava-15.0.jar => version 15.0 in com.google.guava:guava:15.0
+guava-15.0.jar => version 15.0 in com.google.guava:guava:15.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In AndroidUtils:
+* C:\adt-bundle-windows-x86_64-20140702\sdk\platforms\android-15\android.jar => androidUtils\libs\android.jar
+* src\ => androidUtils\src\main\java\
+In acra:
+* C:\adt-bundle-windows-x86_64-20140702\sdk\platforms\android-15\android.jar => acra\libs\android.jar
+* C:\adt-bundle-windows-x86_64-20140702\sdk\platforms\android-20\android.jar => acra\libs\android.jar
+* src\main\java\ => acra\src\main\java\
+* src\test\java\ => acra\src\main\java\
+In AlarmClock:
+* AndroidManifest.xml => alarmClock\src\main\AndroidManifest.xml
+* assets\ => alarmClock\src\main\assets\
+* res\ => alarmClock\src\main\res\
+* src\ => alarmClock\src\main\java\
+* RobotiumTest\libs\android-support-v4.jar => alarmClock\libs\android-support-v4.jar
+* RobotiumTest\libs\robotium-solo-5.2.1.jar => alarmClock\libs\robotium-solo-5.2.1.jar
+* RobotiumTest\res\ => alarmClock\src\androidTest\res\
+* RobotiumTest\src\ => alarmClock\src\androidTest\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
