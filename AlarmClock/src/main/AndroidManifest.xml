@@ -1,0 +1,200 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.better.alarm"
+    android:versionCode="2904"
+    android:versionName="2.9.04" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="21" >
+    </uses-sdk>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <application
+        android:name=".AlarmApplication"
+        android:icon="@mipmap/ic_launcher_alarmclock"
+        android:label="@string/simple_alarm_clock" >
+
+        <!-- Activity to set a new or modify existing alarm -->
+        <activity
+            android:name=".presenter.AlarmsListActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:exported="true"
+            android:label="@string/alarm_list_title"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Activity to set new or modify existing alarm -->
+        <activity
+            android:name=".presenter.AlarmDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:label="@string/set_alarm">
+        </activity>
+
+        <!-- Application Settings -->
+        <activity
+            android:name=".presenter.SettingsActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/settings"
+            android:taskAffinity="" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HandleSetAlarm"
+            android:excludeFromRecents="true"
+            android:permission="com.android.alarm.permission.SET_ALARM"
+            android:theme="@android:style/Theme.NoDisplay" >
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+<!-- Forwards intents to the AlarmAlert or AlarmAlertFullScreen -->
+        <receiver
+            android:name=".presenter.alert.AlarmAlertReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.ALARM_ALERT" />
+                <action android:name="com.better.alarm.ALARM_PREALARM_ACTION" />
+                <action android:name="com.better.alarm.ALARM_SNOOZE" />
+                <action android:name="com.better.alarm.ACTION_CANCEL_SNOOZE" />
+                <action android:name="com.better.alarm.ALARM_DISMISS" />
+                <action android:name="com.better.alarm.ACTION_SOUND_EXPIRED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Alarm alert with snooze and dismiss buttons -->
+        <activity
+            android:name=".presenter.alert.AlarmAlert"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:taskAffinity="" />
+
+        <!-- This activity is basically the same as AlarmAlert 
+             but full-screen so that it can turn the display on. -->
+        <activity
+            android:name=".presenter.alert.AlarmAlertFullScreen"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="" />
+
+        <!-- Transparent activity with TimPickerFragment -->
+       <activity
+            android:name=".presenter.TransparentActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:taskAffinity="" />
+
+        <!-- KlaxonPresenter plays sound -->
+        <receiver
+            android:name=".presenter.background.KlaxonService$Receiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.ALARM_ALERT" />
+                <action android:name="com.better.alarm.ALARM_PREALARM_ACTION" />
+                <action android:name="com.better.alarm.ALARM_SNOOZE" />
+                <action android:name="com.better.alarm.ALARM_DISMISS" />
+                <action android:name="com.better.alarm.ACTION_SOUND_EXPIRED" />
+                <action android:name="com.better.alarm.ACTION_START_PREALARM_SAMPLE" />
+                <action android:name="com.better.alarm.ACTION_STOP_PREALARM_SAMPLE" />
+                <action android:name="com.better.alarm.ACTION_START_ALARM_SAMPLE" />
+                <action android:name="com.better.alarm.ACTION_STOP_ALARM_SAMPLE" />
+                <action android:name="com.better.alarm.ACTION_MUTE" />
+                <action android:name="com.better.alarm.ACTION_DEMUTE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".presenter.background.KlaxonService"
+            android:description="@string/alarm_klaxon_service_desc"
+            android:exported="false" >
+        </service>
+
+        <!-- VibrationPresenter vibrates -->
+        <receiver
+            android:name=".presenter.background.VibrationService$Receiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.ALARM_ALERT" />
+                <action android:name="com.better.alarm.ALARM_SNOOZE" />
+                <action android:name="com.better.alarm.ALARM_DISMISS" />
+                <action android:name="com.better.alarm.ACTION_SOUND_EXPIRED" />
+                <action android:name="com.better.alarm.ACTION_MUTE" />
+                <action android:name="com.better.alarm.ACTION_DEMUTE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".presenter.background.VibrationService"
+            android:description="@string/alarm_klaxon_service_desc"
+            android:exported="false" >
+        </service>
+
+        <!-- Reacts on Alarms being set/unset and changes notification bar and lockscreen -->
+        <receiver
+            android:name=".presenter.background.ScheduledReceiver" 
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.model.Intents.ACTION_ALARMS_UNSCHEDULED" />
+                <action android:name="com.better.alarm.model.Intents.ACTION_ALARM_SCHEDULED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Reacts on Alarms set and displays a toast -->
+        <receiver
+            android:name=".presenter.background.ToastPresenter"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.model.Intents.ACTION_ALARM_SET" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Model -->
+        <receiver
+            android:name=".model.AlarmsService$Receiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.ACTION_FIRED" />
+                <action android:name="com.better.alarm.ACTION_SNOOZED_FIRED" />
+                <action android:name="com.better.alarm.ACTION_SOUND_EXPIRED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".model.AlarmsService"
+            android:exported="false" >
+        </service>
+        <!-- Persistence -->
+        <provider
+            android:name=".model.persistance.AlarmProvider"
+            android:authorities="com.better.alarm.model"
+            android:exported="false" />
+        <service
+            android:name=".model.persistance.DataBaseService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.better.alarm.ACTION_SAVE_ALARM" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
