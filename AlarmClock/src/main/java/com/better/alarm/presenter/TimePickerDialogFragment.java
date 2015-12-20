@@ -1,3 +1,4 @@
+// Commented
 /*
  * Copyright (C) 2012 The Android Open Source Project
  *
@@ -23,6 +24,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,9 @@ import com.github.androidutils.logger.Logger;
 /**
  * Dialog to set alarm time.
  */
+
+// TimePickerのDialogクラス
+
 public class TimePickerDialogFragment extends DialogFragment {
     private Button mSet, mCancel;
     private TimePicker mPicker;
@@ -57,6 +62,7 @@ public class TimePickerDialogFragment extends DialogFragment {
         super.onSaveInstanceState(outState);
     }
 
+    // TimePickerのPopup時
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,21 +118,24 @@ public class TimePickerDialogFragment extends DialogFragment {
         }
     }
 
+    // このインターフェースを継承して各クラスでDialogの時間が設定された時の挙動を実装する。
     public interface AlarmTimePickerDialogHandler {
         void onDialogTimeSet(int hourOfDay, int minute);
     }
 
+    // このインターフェースを継承して各クラスでDialogがキャンセルされた時の挙動を実装する。
     public interface OnAlarmTimePickerCanceledListener {
         void onTimePickerCanceled();
     }
 
     public static void showTimePicker(FragmentManager fragmentManager) {
+        // TipePickerが起動しているフラグを立てている(多分)
         final FragmentTransaction ft = fragmentManager.beginTransaction();
         final Fragment prev = fragmentManager.findFragmentByTag("time_dialog");
         if (prev != null) {
             ft.remove(prev);
         }
-
+        // TimePickerDialogを生成
         final TimePickerDialogFragment fragment = TimePickerDialogFragment.newInstance();
         fragment.show(ft, "time_dialog");
     }
